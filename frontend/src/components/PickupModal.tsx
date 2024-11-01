@@ -135,6 +135,7 @@ const PickupModal: React.FC<PickupProps> = ({ userId, setUserId, closeModal }) =
       </div>
     </div>
   );
+
 };
 
 export default PickupModal;
