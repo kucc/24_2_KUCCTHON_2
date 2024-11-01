@@ -1,4 +1,3 @@
-from config import Settings
 from dependencies import get_current_user, get_db
 from domain.planet_service import (
     service_abandon_item,
@@ -17,8 +16,6 @@ router = APIRouter(
     prefix="/planet",
     tags=["planet"]
 )
-
-settings = Settings()
 
 
 @router.get(
@@ -95,7 +92,6 @@ def put_item(
     db: Session = Depends(get_db),
 ):
     result = service_apply_item(item.id, current_user.id, db)
-
     return result
 
 
@@ -111,5 +107,4 @@ def abandon_item(
     db: Session = Depends(get_db)
 ):
     result = service_abandon_item(item_type, current_user.id, db)
-
     return result

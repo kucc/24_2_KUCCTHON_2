@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import BaseModel, Field
 
 
@@ -25,7 +23,7 @@ class ResGetPlanet(BaseModel):
   like_count: int=Field(title="like_count", description="좋아요 개수")
 
 class ResGetAllPlanet(BaseModel):
-  data: List[ResGetPlanet]=Field(title="planet_list", description="행성 목록")
+  data: list[ResGetPlanet]=Field(title="planet_list", description="행성 목록")
   count: int=Field(0, title="planet_count", description="전체 행성 개수", ge=0)
 
 
