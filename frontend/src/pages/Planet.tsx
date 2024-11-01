@@ -73,21 +73,20 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
 
 
   const handleGiveBanana = async () => {
-    if (!planetUserId) return;
+    if (!planetUserId || !userId) return;
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/like/${planetUserId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/like/${planetUserId}?user_id=${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer your_token_here`, // 실제 토큰으로 대체
         },
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok ' + response.statusText);
       }
-
+  
       const data = await response.json();
       setLikeResponse(data); // 성공 응답을 상태에 저장
       console.log("Like success:", data);
@@ -95,7 +94,6 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       console.error("Error giving banana:", error);
     }
   };
-
   
   const handleBlackholeClick = () => {
     navigate("/gateway"); // Blackhole 클릭 시 'gateway'로 이동
