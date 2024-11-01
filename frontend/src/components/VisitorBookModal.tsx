@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import styles from "./Planet.module.css";
 import sign from '../img/Sign.svg'
+import styles from "./VisitorBookModal.module.css";
 
 const VisitorBookModal: React.FC = () => {
     return (
-      <div className={styles.background}>
-        <div>
+      <div>
+        <div className={styles.sign}>
           <img src={sign} alt='이미지' />
         </div>
         <div>

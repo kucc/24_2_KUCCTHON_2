@@ -6,9 +6,12 @@ interface ButtonProps {
   text: string; 
   onClick: () => void; 
   className?: string;
+  onClick: () => void;
 }
 
+
 const Button: React.FC<ButtonProps> = ({ text, onClick, className }) => {
+
   return (
     <div className={styles["button-container"]} >
       <img src={bananaButton} alt="banana" className={styles["button-image"]} />
