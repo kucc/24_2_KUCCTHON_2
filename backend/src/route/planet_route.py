@@ -1,8 +1,8 @@
 from config import Settings
 from dependencies import get_db
-from domain.planet_service import service_read_all_planet, service_read_comments, service_read_planet
+from domain.planet_service import service_read_all_planet, service_read_comments, service_read_planet, service_create_comments
 from fastapi import APIRouter, Depends, status
-from schema.comments_schema import ResGetComments
+from schema.comments_schema import ReqPostComments, ResGetComments, ResPostComments, RouteReqPostComments
 from schema.planet_schema import ResGetAllPlanet, ResGetPlanet
 from sqlalchemy.orm import Session
 
@@ -37,6 +37,25 @@ async def get_planet(
     db: Session = Depends(get_db)
 ):
     result = await service_read_planet(user_id, db)
+    return result
+
+@router.post(
+    "/{user_id}/comments",
+    summary="행성 방명록 작성",
+    response_model=ResPostComments,
+    status_code=status.HTTP_200_OK,
+)
+async def get_comments(
+    user_id: int,
+    request: RouteReqPostComments,
+    db: Session = Depends(get_db)
+):
+    domain_req=ReqPostComments(
+      user_id=request.current_user_id,
+      planet_user_id=user_id,
+      content=request.content,
+    )
+    result = await service_create_comments(domain_req, db)
     return result
 
 @router.get(

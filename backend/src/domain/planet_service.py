@@ -1,6 +1,7 @@
+from datetime import datetime
 from fastapi import HTTPException, status
 from models import Comments, Planet, User
-from schema.comments_schema import Comment, ResGetComments
+from schema.comments_schema import Comment, ReqPostComments, ResGetComments, ResPostComments
 from schema.planet_schema import ResGetPlanet
 from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
@@ -63,6 +64,33 @@ async def service_read_planet(user_id: int, db: Session):
 
   return response
 
+async def service_create_comments(request: ReqPostComments, db: Session):
+  planet = db.execute(select(Planet).where(Planet.user_id==request.planet_user_id)).scalar_one()
+  comment_request = Comments(
+      user_id=request.user_id,
+      planet_id=planet.id,
+      content=request.content,
+      created_at=datetime.now()
+  )
+
+  try:
+      db.add(comment_request)
+      db.flush()
+  except Exception as e:
+      db.rollback()
+      raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                          detail=f"Unexpected error occurred: {str(e)}") from e
+  else:
+      db.commit()
+      db.refresh(comment_request)
+
+      result = ResPostComments(
+        user_id=request.user_id,
+        planet_user_id=planet.id,
+        content=request.content,
+      )
+  return result
+
 async def service_read_comments(user_id: int, db: Session):
   stmt = select(Planet).where(Planet.user_id==user_id)
   try:
@@ -70,9 +98,9 @@ async def service_read_comments(user_id: int, db: Session):
   except NoResultFound:
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                           detail="Not found") from NoResultFound
-  stmt = select(Comments).where(Comments.planet_id == planet.id)
+  stmt = select(Comments).where(Comments.planet_id == planet.id).order_by(Comments.created_at)
   try:
-    my_comments = db.execute(stmt).order_by(Comments.created_at).scalars().all()
+    my_comments = db.execute(stmt).scalars().all()
   except NoResultFound:
       raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                           detail=f"Comments not found for planet {planet.planet_name}") from NoResultFound
