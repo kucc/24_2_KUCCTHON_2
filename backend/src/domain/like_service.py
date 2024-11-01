@@ -28,7 +28,11 @@ def service_create_like(user_id, planet_id, db: Session):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Planet not found."
             )
-
+        if planet.user_id == user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="자기 자신의 행성에게는 좋아요 할 수 없습니다."
+            )
         try:
             service_increase_like(planet_id, 1, db)
             service_increase_ticket(planet.user_id, 1, db) # 행성의 사용자에게 (= 좋아요를 받는 사용자에게)
