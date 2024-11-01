@@ -1,5 +1,8 @@
+from datetime import datetime
 from fastapi import HTTPException, status
 from models import Item, Planet, User
+from models import Comments, Planet, User
+from schema.comments_schema import Comment, ReqPostComments, ResGetComments, ResPostComments
 from schema.planet_schema import ResGetPlanet
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, NoResultFound
@@ -172,4 +175,70 @@ async def service_read_planet(user_id: int, db: Session):
     like_count=planet.like_count
   )
 
+  return response
+
+async def service_create_comments(request: ReqPostComments, db: Session):
+  planet = db.execute(select(Planet).where(Planet.user_id==request.planet_user_id)).scalar_one()
+  comment_request = Comments(
+      user_id=request.user_id,
+      planet_id=planet.id,
+      content=request.content,
+      created_at=datetime.now()
+  )
+
+  try:
+      db.add(comment_request)
+      db.flush()
+  except Exception as e:
+      db.rollback()
+      raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                          detail=f"Unexpected error occurred: {str(e)}") from e
+  else:
+      db.commit()
+      db.refresh(comment_request)
+
+      result = ResPostComments(
+        user_id=request.user_id,
+        planet_user_id=planet.id,
+        content=request.content,
+      )
+  return result
+
+async def service_read_comments(user_id: int, db: Session):
+  stmt = select(Planet).where(Planet.user_id==user_id)
+  try:
+    planet = db.execute(stmt).scalar_one()
+  except NoResultFound:
+      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                          detail="Not found") from NoResultFound
+  stmt = select(Comments).where(Comments.planet_id == planet.id).order_by(Comments.created_at)
+  try:
+    my_comments = db.execute(stmt).scalars().all()
+  except NoResultFound:
+      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                          detail=f"Comments not found for planet {planet.planet_name}") from NoResultFound
+  comments = []
+  for my_comment in my_comments:
+    # User 조회
+    stmt = select(User).where(User.id == my_comment.user_id)
+    try:
+      user = db.execute(stmt).scalar_one()  # 단일 사용자 가져오기
+    except NoResultFound:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="User not found for comment") from NoResultFound
+
+    # 응답 구성
+    comments.append(
+        Comment(
+            user_name=user.user_name,
+            content=my_comment.content,
+            created_at=my_comment.created_at,
+        )
+    )
+  response = ResGetComments(
+    planet_name=planet.planet_name,
+    user_name=user.user_name,
+    comments=comments,
+    count=len(comments),
+  )
   return response
