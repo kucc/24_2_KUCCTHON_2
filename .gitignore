@@ -2,4 +2,4 @@
 alembic.ini
 alembic/
 __pycache__/
-
+*.pyc
