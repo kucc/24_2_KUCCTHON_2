@@ -2,6 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import styles from './SignInModal.module.css';
 import { useNavigate } from 'react-router-dom';
 
+
 interface SignInModalProps {
   isOpen: boolean;
   close: () => void;
@@ -9,7 +10,6 @@ interface SignInModalProps {
   setUserId: (id: number) => void;
 }
 
-  const navigate = useNavigate(); 
   const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close, userId, setUserId }) => {
   const [loginData, setLoginData] = useState({
     login_id: '',
