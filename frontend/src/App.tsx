@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
 
 const fetchData = async () => {
   try {
@@ -16,9 +18,11 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Hello from React!!!!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path={'/'} element={<Home  />} />       
+      </Routes>
+    </Router>
   );
 };
 
