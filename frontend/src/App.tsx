@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import Planet from './pages/Planet'
 
 const fetchData = async () => {
   try {
@@ -20,7 +21,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path={"/"} element={<Planet />} />
+        <Route path={"/"} element={<Home />} />
       </Routes>
     </Router>
   );
