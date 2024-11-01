@@ -1,11 +1,11 @@
 from typing import List
 
-from comments_schema import Comment
 from pydantic import BaseModel, Field
 
 
 class ResGetPlanet(BaseModel):
   planet_name: str=Field(title="planet_name", description="행성 이름")
+  user_id: int
   user_name: str=Field(title="user_name", description="행성 주인 닉네임")
   head: int=Field(0, title="head", description="머리 아이템", ge=0)
   pet: int=Field(0, title="head", description="애완 아이템", ge=0)

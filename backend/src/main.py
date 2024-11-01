@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from route.auth_route import router as auth_router
+from route.planet_route import router as planet_router
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+app.include_router(planet_router)
 
 @app.get("/")
 async def root():
