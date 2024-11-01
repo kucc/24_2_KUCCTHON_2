@@ -1,7 +1,9 @@
 from domain.token_service import create_user_tokens
 from fastapi import HTTPException, status
 from models import Planet, User
-from schema.auth_schema import LoginRequest, LoginResponse, RegisterRequest, UserInfo
+from schema.auth_schema import LoginRequest, LoginResponse, PlanetSetting, RegisterRequest, UserInfo
+from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 
@@ -23,7 +25,7 @@ async def register(request: RegisterRequest, db: Session):
         db.refresh(user)
         planet = Planet(
             user_id=user.id,
-            planet_name=request.planet_name,
+            planet_name=None,
             head=0,
             pet=0,
             eye=0,
@@ -52,7 +54,8 @@ async def register(request: RegisterRequest, db: Session):
 
 async def login(
         request: LoginRequest,
-        db: Session):
+        db: Session
+    ):
     # Authenticate user
     # Check if user information exists in the DB
     user = db.query(User).filter(User.login_id == request.login_id).first()
@@ -79,3 +82,39 @@ async def login(
         token=token_response,
         user=user_response
     )
+
+def service_put_initial_planet(request: PlanetSetting, user_id: int, db: Session):
+    stmt = select(Planet).where(Planet.user_id == user_id)
+
+    try:
+        planet = db.execute(stmt).scalar_one_or_none()
+        if not planet:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Planet not found"
+            )
+
+        planet.planet_name = request.planet_name
+        planet.planet_type = request.planet_type
+
+        db.flush()
+
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Integrity Error occurred during update: {str(e)}",
+        ) from e
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Unexpected error occurred during update: {str(e)}",
+        ) from e
+
+    else:
+        db.commit()
+        db.refresh(planet)
+
+    return planet

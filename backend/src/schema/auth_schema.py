@@ -26,10 +26,13 @@ class RegisterRequest(BaseModel):
     login_id: str
     password: str
     user_name: str
-    planet_name: str
 
 
 class RegisterResponse(BaseModel):
     token: TokenResponse
     user: UserInfo
     planet: str
+
+class PlanetSetting(BaseModel):
+    planet_name: str
+    planet_type: int
