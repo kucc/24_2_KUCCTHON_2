@@ -1,5 +1,8 @@
 .paper{
     position:absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 가운데 배치 */
 }
 
 .pickUpContaioner{
@@ -8,6 +11,17 @@
     align-items: center;
 }
 .Btn{
-    position: fixed;
-    bottom: 30%;
+    position:absolute;
+    top: 75%;
+    left: 48%;
+    transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 가운데 배치 */
+}
+
+.item img{
+    width: 300px;
+    height: 300px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 이미지의 중심을 기준으로 가운데 배치 */
 }
