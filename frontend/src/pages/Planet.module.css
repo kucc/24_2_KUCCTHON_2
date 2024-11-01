@@ -51,3 +51,9 @@
     display: none;
   }
   
+  .BlackholeContainer {
+    position: fixed; /* 화면에 고정 */
+    bottom: 20px; /* 화면 아래에서 20px 간격 */
+    right: 20px; /* 화면 오른쪽에서 20px 간격 */
+    z-index: 10; /* 다른 요소 위에 표시되도록 설정 */
+  }
