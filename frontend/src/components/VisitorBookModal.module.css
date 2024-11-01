@@ -1,3 +1,52 @@
 .sign{
     position:absolute;
 }
+
+.textbox{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    height: auto;
+    font-size: 18px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    padding: 10px;
+    flex-direction: row-reverse;
+    background: white;
+  }
+
+  .comment{
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+  }
+  .sendBtn_red{
+    width: 50px;
+  }
+  .VisitorList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    height: 450px;
+  }
+
+  .textContainer{
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+  }
+
+.textarea {
+    resize: none;
+    border: none;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+  }
+
+

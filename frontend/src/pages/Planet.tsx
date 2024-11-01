@@ -45,6 +45,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   //     return true
   //   }
   // }
+  
 
   return (
     <div className={styles.background}>
@@ -78,11 +79,11 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       </div>
       <div className={isVisitor? styles.visitorModal : styles.hidden}>
           <button onClick={handleVisitor} >X</button>
-          <VisitorBookModal/>
+          <VisitorBookModal userId={userId} setUserId={setUserId} otherId={Number(planetUserId)}/>
       </div>
       <div className={isPickUp? styles.pickupModal: styles.hidden}>
           <button onClick={handlePickup} >X</button>
-          <PickupModal/>
+          <PickupModal userId={userId} setUserId={setUserId}/>
       </div>
     </div>
   );
