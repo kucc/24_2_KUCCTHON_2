@@ -12,9 +12,6 @@ class ResGetPlanet(BaseModel):
   eye: int=Field(0, title="head", description="눈 아이템", ge=0)
   tool: int=Field(0, title="head", description="도구 아이템", ge=0)
   like_count: int=Field(title="like_count", description="좋아요 개수")
-  comments: List[Comment]=Field(title="comments", description="방명록 목록")
-  comments_count: int=Field(title="comments_count", description="방명록 개수")
-
 
 class ResGetAllPlanet(BaseModel):
   data: List[ResGetPlanet]=Field(title="planet_list", description="행성 목록")
