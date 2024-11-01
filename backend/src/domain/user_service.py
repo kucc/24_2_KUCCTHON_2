@@ -15,7 +15,7 @@ def service_get_user_ticket(user_id, db: Session):
     except NoResultFound:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Users not found"
+            detail="User not found"
         ) from None
 
     except Exception as e:
