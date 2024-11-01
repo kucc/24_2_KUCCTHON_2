@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import styles from './SignInModal.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -7,6 +8,7 @@ interface SignInModalProps {
 }
 
 const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
+  const navigate = useNavigate(); 
   const [loginData, setLoginData] = useState({
     login_id: '',
     password: ''
@@ -32,6 +34,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
       .then((data) => {
         console.log(loginData);
         close(); // 로그인 성공 후 모달 닫기
+        navigate("/Gateway");
       })
       .catch((error) => {
         console.error("Login error:", error);

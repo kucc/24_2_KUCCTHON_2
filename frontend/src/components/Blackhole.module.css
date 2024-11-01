@@ -45,15 +45,15 @@
     opacity: 1; /* 호버 이미지 표시 */
   }
   
-  .button-text {
+  .blackhole-text {
     position: absolute;
     font-family: "Courier New", Courier, monospace;
     font-size: 20px;
     font-weight: 600;
-    margin-left: 52px;
-    margin-top: 14px;
-    color: #000;
-    text-shadow: 1px 1px #fff;
+    color: white;
     pointer-events: none;
+    top: 50%; /* 텍스트를 블랙홀의 중간 부분으로 이동 */
+    margin-top:150px;
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
   }
   

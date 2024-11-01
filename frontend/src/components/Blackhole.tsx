@@ -20,7 +20,7 @@ const Blackhole: React.FC<BlackholeProps> = ({onClick,text}) => {
   className={styles["button-hover-image"]}
   onClick={onClick}
 />
-<span className={styles["button-text"]}>{text}</span>
+<span className={styles["blackhole-text"]}>{text}</span>
 </div>
        </div>
   );

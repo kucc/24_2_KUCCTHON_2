@@ -34,7 +34,8 @@ const Gateway: React.FC<GatewayProps> = ({onClick,text}) => {
       </div>
       </div>
 <div className={styles.centerContainer}>
-  <Blackhole/>
+  <Blackhole text='내 행성'/>
+
 </div>
        </div>
   );

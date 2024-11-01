@@ -22,7 +22,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path={"/"} element={<Gateway />} />
+        <Route path={"/"} element={<Home />} />
+        <Route path={"/Gateway"} element={<Gateway />} />
       </Routes>
     </Router>
   );
