@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from "react-dom/client";
 import styles from "./Channel.module.css";
 import banana from '../img/banana.svg'
 import planetImg from '../img/Planet.svg';
 import { useNavigate } from 'react-router-dom';
 import Planet from './Planet';
+import Blackhole from '../components/Blackhole';
 
 interface ChannelProps {
   userId: number;
@@ -51,6 +51,10 @@ const Channel: React.FC<ChannelProps> = ({userId, setUserId}) => {
     navigate(`/planet/${planetUserId}`); // planetUserId를 URL 경로에 추가
   };
   
+  const handleBlackholeClick = () => {
+    navigate("/gateway"); // Blackhole 클릭 시 'gateway'로 이동
+  };
+  
   useEffect(() => {
     const getPlanets = async () => {
       try {
@@ -94,6 +98,9 @@ const Channel: React.FC<ChannelProps> = ({userId, setUserId}) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className={styles.BlackholeContainer} onClick={handleBlackholeClick}>
+        <Blackhole/>
       </div>
     </div>
   );

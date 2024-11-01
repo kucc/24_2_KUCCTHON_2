@@ -5,7 +5,8 @@ import planet from '../img/Planet.svg'
 import VisitorBookModal from "../components/VisitorBookModal";
 import Button from "../components/Button";
 import PickupModal from "../components/PickupModal";
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import Blackhole from '../components/Blackhole';
 
 
 interface PlanetProps {
@@ -17,6 +18,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
 
   const [isVisitor, setIsVisitor] = useState(false)
   const [isPickUp, setIsPickup] = useState(false)
+  const navigate = useNavigate();
 
   const { planetUserId } = useParams(); // URL에서 planetUserId 가져오기
 
@@ -37,7 +39,6 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   console.log(isMine)
 
   const giveBanana= () => {
-
   }
 
   // const inMine = () => {
@@ -45,6 +46,10 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   //     return true
   //   }
   // }
+
+  const handleBlackholeClick = () => {
+    navigate("/gateway"); // Blackhole 클릭 시 'gateway'로 이동
+  };
 
   return (
     <div className={styles.background}>
@@ -83,6 +88,9 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       <div className={isPickUp? styles.pickupModal: styles.hidden}>
           <button onClick={handlePickup} >X</button>
           <PickupModal/>
+      </div>
+      <div className={styles.BlackholeContainer} onClick={handleBlackholeClick}>
+        <Blackhole/>
       </div>
     </div>
   );
