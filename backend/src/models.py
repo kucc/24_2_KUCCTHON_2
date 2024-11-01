@@ -27,7 +27,7 @@ class Planet(Base):
     eye = Column(Integer, nullable=False)
     tool = Column(Integer, nullable=False)
     like_count = Column(Integer, default=0)
-    
+
     user = relationship("User", back_populates="planet")
     comments = relationship("Comments", back_populates="planet")
     likes = relationship("Likes", back_populates="planet")
@@ -55,3 +55,11 @@ class Likes(Base):
 
     user = relationship("User", back_populates="likes")
     planet = relationship("Planet", back_populates="likes")
+
+
+class Item(Base):
+    __tablename__ = "item"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    place = Column(String(20), nullable=False)
+    name = Column(String(20), nullable=False)

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import Home from "./pages/Home";
-import Planet from "./pages/Planet";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
 
 const fetchData = async () => {
   try {
