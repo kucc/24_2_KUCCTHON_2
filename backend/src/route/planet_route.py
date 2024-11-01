@@ -1,8 +1,8 @@
-from config import Settings
-from dependencies import get_db
-from domain.planet_service import service_read_all_planet, service_read_planet
+from dependencies import get_current_user, get_db
+from domain.planet_service import service_abandon_item, service_apply_item, service_read_all_planet, service_read_planet
 from fastapi import APIRouter, Depends, status
-from schema.planet_schema import ResGetAllPlanet, ResGetPlanet
+from schema.planet_schema import PlanetItem, ReqPutPlanetItem, ResGetAllPlanet, ResGetPlanet
+from config import Settings
 from sqlalchemy.orm import Session
 
 router = APIRouter(
@@ -36,4 +36,36 @@ async def get_planet(
     db: Session = Depends(get_db)
 ):
     result = await service_read_planet(user_id, db)
+
+    return result
+  
+@router.put(
+    "/random_item",
+    summary="아이템 적용",
+    response_model=PlanetItem,
+    status_code=status.HTTP_200_OK
+)
+def put_item(
+    item: ReqPutPlanetItem,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    result = service_apply_item(item.id, current_user.id, db)
+
+    return result
+
+
+@router.put(
+    "/abandon_item/{item_type}",
+    summary="아이템 버리기",
+    response_model=PlanetItem,
+    status_code=status.HTTP_200_OK
+)
+def abandon_item(
+    item_type: str,
+    current_user = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    result = service_abandon_item(item_type, current_user.id, db)
+
     return result

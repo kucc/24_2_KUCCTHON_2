@@ -16,6 +16,7 @@ async def register(request: RegisterRequest, db: Session):
             login_id=request.login_id,
             password=request.password,
             user_name=request.user_name,
+            ticket=0
         )
         db.add(user)
         db.commit()
