@@ -9,7 +9,8 @@ interface SignInModalProps {
   setUserId: (id: number) => void;
 }
 
-const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close, userId, setUserId }) => {
+  const navigate = useNavigate(); 
+  const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close, userId, setUserId }) => {
   const [loginData, setLoginData] = useState({
     login_id: '',
     password: ''
@@ -42,9 +43,9 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close, userId, setUse
       .then((data) => {
         console.log(data); // 로그인 응답 데이터 로깅
         close(); // 로그인 성공 후 모달 닫기
+        navigate("/gateway");
         setUserId(data.user.id); // 사용자 ID 설정
         localStorage.setItem("accessToken", data.token.access_token); // 토큰을 로컬 스토리지에 저장
-        navigate(`/channel`)
       })
       .catch((error) => {
         console.error("Login error:", error);
