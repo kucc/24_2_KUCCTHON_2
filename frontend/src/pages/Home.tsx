@@ -10,10 +10,10 @@ const Home: React.FC = () => {
       <div className={styles.logoContainer}>
         <img src={homeLogo}></img>
       </div>
-      <div className={styles.LoginContainer}>
+      {/* <div className={styles.LoginContainer}>
         <Button text="로그인" />
         <Button text="회원가입" />
-      </div>
+      </div> */}
     </div>
   );
 };

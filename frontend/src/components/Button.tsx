@@ -5,9 +5,10 @@ import bananaButton_hover from "../img/bananaButton_hover.svg";
 interface ButtonProps {
   text: string;
   className?: string;
+  onClick: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ text }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick }) => {
   return (
     <div className={styles["button-container"]}>
       <img src={bananaButton} alt="banana" className={styles["button-image"]} />
@@ -16,6 +17,7 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
         src={bananaButton_hover}
         alt="banana hover"
         className={styles["button-hover-image"]}
+        onClick={onClick}
       />
 
       <span className={styles["button-text"]}>{text}</span>

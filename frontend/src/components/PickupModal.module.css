@@ -1,0 +1,13 @@
+.paper{
+    position:absolute;
+}
+
+.pickUpContaioner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Btn{
+    position: fixed;
+    bottom: 30%;
+}
