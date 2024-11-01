@@ -1,4 +1,4 @@
-from dependencies import get_current_user, get_db
+from dependencies import get_db
 from domain.item_service import service_draw_random_item
 from domain.user_service import service_get_user_ticket, service_reduce_user_ticket
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -17,11 +17,11 @@ router = APIRouter(
     status_code=status.HTTP_200_OK
 )
 def get_random_item(
-    current_user = Depends(get_current_user),
+    user_id: int,
     db: Session = Depends(get_db),
 ):
-    if (service_get_user_ticket(current_user.id, db) > 0):
-        service_reduce_user_ticket(current_user.id, 1, db)
+    if (service_get_user_ticket(user_id, db) > 0):
+        service_reduce_user_ticket(user_id, 1, db)
         result = service_draw_random_item(db)
     else:
         raise HTTPException(
