@@ -6,7 +6,12 @@ import SignInModal from "../components/SignInModal";
 import SignUpModal from '../components/SignUpModal'; 
 import homeLogo from "../img/homeLogo.svg";
 
-const Home: React.FC = () => {
+interface HomeProps {
+  userId: number;
+  setUserId: (id: number) => void;
+}
+
+const Home: React.FC<HomeProps> = ({userId, setUserId}) => {
   const [currentModal, setCurrentModal] = useState<'signIn' | 'signUp' | null>(null);
 
   const openSignInModal = () => {
@@ -36,7 +41,7 @@ const Home: React.FC = () => {
       <Button onClick={openSignUpModal} text="회원가입" />
       </div>
          {/* 로그인 모달 */}
-         {currentModal === 'signIn' && <SignInModal isOpen={currentModal === 'signIn'} close={closeModal} />}
+         {currentModal === 'signIn' && <SignInModal isOpen={currentModal === 'signIn'} close={closeModal} userId={userId} setUserId={setUserId}/>}
 
          {/* 회원가입 모달 */}
          {currentModal === 'signUp' && <SignUpModal isOpen={currentModal === 'signUp'} close={closeModal} />}

@@ -5,11 +5,20 @@ import planet from '../img/Planet.svg'
 import VisitorBookModal from "../components/VisitorBookModal";
 import Button from "../components/Button";
 import PickupModal from "../components/PickupModal";
+import { useParams } from 'react-router-dom';
 
-const Planet: React.FC = () => {
+
+interface PlanetProps {
+  userId: number;
+  setUserId: (id: number) => void;
+}
+
+const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
 
   const [isVisitor, setIsVisitor] = useState(false)
   const [isPickUp, setIsPickup] = useState(false)
+
+  const { planetUserId } = useParams(); // URL에서 planetUserId 가져오기
 
   const handleVisitor = () => {
     setIsVisitor(!isVisitor)
@@ -24,7 +33,8 @@ const Planet: React.FC = () => {
   }
 
   const count = 8
-  const isMine = true
+  const isMine = userId === Number(planetUserId);
+  console.log(isMine)
 
   const giveBanana= () => {
 
