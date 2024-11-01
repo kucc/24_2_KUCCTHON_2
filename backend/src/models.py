@@ -31,6 +31,7 @@ class Planet(Base):
     eye = Column(Integer, nullable=False)
     tool = Column(Integer, nullable=False)
     like_count = Column(Integer, default=0)
+    planet_type = Column(Integer, nullable=True)
 
     user = relationship("User", back_populates="planet")
     comments = relationship("Comments", back_populates="planet")

@@ -72,3 +72,35 @@ def service_reduce_user_ticket(user_id, count, db: Session):
     )
 
     return response
+
+def service_increase_ticket(user_id: int, count: int, db: Session) -> None:
+    print(user_id)
+    stmt = select(User).where(User.id == user_id)
+    try:
+        user = db.execute(stmt).scalar_one_or_none()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found",
+            )
+
+        user.ticket += count
+        db.flush()
+
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Integrity Error occurred during update: {str(e)}",
+        ) from e
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Unexpected error occurred during update: {str(e)}",
+        ) from e
+
+    else:
+        db.commit()
+        db.refresh(user)
