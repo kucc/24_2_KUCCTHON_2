@@ -7,7 +7,6 @@ import Button from "../components/Button";
 import PickupModal from "../components/PickupModal";
 import { useParams,useNavigate } from 'react-router-dom';
 import Blackhole from '../components/Blackhole';
-import { useParams } from 'react-router-dom';
 import head_tree from '../img/head_tree.svg'
 import head_angel from '../img/head_angel.svg'
 import eye_sunglass from '../img/eye_sunglass.svg'
