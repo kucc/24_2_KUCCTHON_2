@@ -11,10 +11,36 @@
   flex-direction: column;
 }
 
-.LoginContainer {
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* align-content는 flex container에서만 사용 가능 */
+  width: 800px;
+  background: rgba(217, 217, 217, 0.5); /* 투명도 적용 */
+  border: 1px solid black;
+}
+
+.planet{
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 800px;
-  margin-top: 110px;
+}
+
+.img{
+  width: 20px;
+  margin-right: 10px; 
+  align-self: center;
+  padding-top: 3px;
+}
+.planetText{
+  flex: 1; /* 각 요소가 동일한 비율로 공간을 차지하도록 설정 */
+  font-size: 20px;
+  margin: 10px; /* 여백을 필요에 따라 조정 */
+  text-align: center; /* 텍스트를 중앙 정렬 */
+  border: 1px solid black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: rgba(217, 217, 217, 0.8); /* 투명도 적용 */
 }

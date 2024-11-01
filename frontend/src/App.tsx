@@ -24,6 +24,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/channel"} element={<Channel />} />
+        <Route path={"/planet"} element={<Planet />} />
       </Routes>
     </Router>
   );
