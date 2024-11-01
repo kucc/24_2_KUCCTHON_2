@@ -172,7 +172,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       </div>
       <div className={isPickUp? styles.pickupModal: styles.hidden}>
           <button onClick={handlePickup} >X</button>
-          <PickupModal/>
+          <PickupModal userId={userId} setUserId={setUserId}/>
       </div>
       <div className={styles.BlackholeContainer} onClick={handleBlackholeClick}>
         <Blackhole/>
