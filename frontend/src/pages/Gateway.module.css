@@ -1,0 +1,67 @@
+.background {
+    background-image: url("../img/PlanetBg.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex; /* flexbox를 사용하여 내부 요소를 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    flex-direction: column;
+  }
+  
+  .centerContainer{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .starContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2개의 열을 동일한 너비로 생성 */
+    grid-template-rows: repeat(2, auto); /* 2개의 행 생성 */
+    gap: 150px 500px;
+  }
+  
+  .starContainer img {
+    width: 100%; /* 이미지 크기를 부모 컨테이너 너비에 맞추기 */
+    height: auto; /* 이미지 비율 유지 */
+  }
+  .star{
+    cursor: pointer;
+  }
+
+  .star:hover {
+    transform: scale(1.1); /* 이미지 크기를 약간 확대 */ 
+  }
+
+
+  .star_blueContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 텍스트를 중앙 정렬 */
+  }
+  .star_pinkContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 텍스트를 중앙 정렬 */
+  }
+  .star_yellowContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 텍스트를 중앙 정렬 */
+  }
+  .star_violetContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 이미지와 텍스트를 중앙 정렬 */
+  }
+    .starText {
+    color: white;
+    margin-top:-15px;
+    font-size: 16px;
+    text-align: center; 
+  
+  }

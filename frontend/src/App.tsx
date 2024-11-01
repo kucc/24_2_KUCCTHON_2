@@ -3,6 +3,7 @@ import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Planet from './pages/Planet'
+import Gateway from './pages/Gateway'
 
 const fetchData = async () => {
   try {
@@ -21,7 +22,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path={"/"} element={<Home />} />
+        <Route path={"/"} element={<Gateway />} />
       </Routes>
     </Router>
   );
