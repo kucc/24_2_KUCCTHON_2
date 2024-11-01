@@ -10,7 +10,7 @@ interface ChannelProps {
   userId: number;
   setUserId: (id: number) => void;
 }
-interface Planet {
+interface PlanetInfo {
   planet_name: string
   user_id: number
   user_name: string
@@ -22,7 +22,7 @@ interface Planet {
 }
 
 interface PlanetResponse {
-  data: Planet[];
+  data: PlanetInfo[];
   count: number;
 }
 
@@ -40,7 +40,7 @@ const fetchPlanet = async (): Promise<PlanetResponse> => {
 }
 
 const Channel: React.FC<ChannelProps> = ({userId, setUserId}) => {
-  const [planets, setPlanets] = useState<Planet[]>([]);
+  const [planets, setPlanets] = useState<PlanetInfo[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
