@@ -1,4 +1,4 @@
-from dependencies import get_current_user, get_db
+from dependencies import get_db
 from domain.like_service import service_create_like
 from fastapi import APIRouter, Depends, status
 from schema.like_schema import LikeItem
@@ -17,8 +17,8 @@ router = APIRouter(
 )
 async def create_like(
     planet_id: int,
-    current_user = Depends(get_current_user),
+    user_id: int,
     db: Session = Depends(get_db),
 ):
-    result = service_create_like(current_user.id, planet_id, db)
+    result = service_create_like(user_id, planet_id, db)
     return result

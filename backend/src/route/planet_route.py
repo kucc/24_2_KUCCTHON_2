@@ -1,5 +1,5 @@
 from config import Settings
-from dependencies import get_current_user, get_db
+from dependencies import get_db
 from domain.planet_service import (
     service_abandon_item,
     service_apply_item,
@@ -91,10 +91,10 @@ async def get_comments(
 )
 def put_item(
     item: ReqPutPlanetItem,
-    current_user = Depends(get_current_user),
+    user_id: int,
     db: Session = Depends(get_db),
 ):
-    result = service_apply_item(item.id, current_user.id, db)
+    result = service_apply_item(item.id, user_id, db)
 
     return result
 
@@ -107,9 +107,9 @@ def put_item(
 )
 def abandon_item(
     item_type: str,
-    current_user = Depends(get_current_user),
+    user_id: int,
     db: Session = Depends(get_db)
 ):
-    result = service_abandon_item(item_type, current_user.id, db)
+    result = service_abandon_item(item_type, user_id, db)
 
     return result
