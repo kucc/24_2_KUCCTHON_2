@@ -242,3 +242,34 @@ async def service_read_comments(user_id: int, db: Session):
     count=len(comments),
   )
   return response
+
+def service_increase_like(planet_id: int, count: int, db: Session) -> None:
+    stmt = select(Planet).where(Planet.id == planet_id)
+    try:
+        planet = db.execute(stmt).scalar_one_or_none()
+        if not planet:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Planet not found",
+            )
+
+        planet.like_count += count
+        db.flush()
+
+    except IntegrityError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Integrity Error occurred during update: {str(e)}",
+        ) from e
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Unexpected error occurred during update: {str(e)}",
+        ) from e
+
+    else:
+        db.commit()
+        db.refresh(planet)
