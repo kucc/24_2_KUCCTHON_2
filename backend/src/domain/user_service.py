@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from models import User
+from models import User, Planet
 from schema.user_schema import ResGetUser
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, NoResultFound
@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 
 def service_get_user_ticket(user_id, db: Session):
-    stmt = select(User.ticket).where(User.id == user_id)
+    stmt = select(Planet).where(Planet.user_id == user_id)
 
     try:
         ticket = db.execute(stmt).scalar_one()
@@ -27,23 +27,23 @@ def service_get_user_ticket(user_id, db: Session):
     return ticket
 
 def service_reduce_user_ticket(user_id, count, db: Session):
-    stmt = select(User).where(User.id == user_id)
+    stmt = select(Planet).where(Planet.user_id == user_id)
 
     try:
-        user = db.execute(stmt).scalar_one()
+        planet = db.execute(stmt).scalar_one()
 
-        if not user:
+        if not planet:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="No user"
             )
-        if(user.ticket < count):
+        if(planet.ticket < count):
             raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="No enough tickets",
         )
 
-        user.ticket = user.ticket - count
+        planet.like_count = planet.like_count - count
 
         db.flush()
 
@@ -63,12 +63,12 @@ def service_reduce_user_ticket(user_id, count, db: Session):
 
     else:
         db.commit()
-        db.refresh(user)
+        db.refresh(planet)
 
     response = ResGetUser(
-        id = user.id,
-        user_name = user.user_name,
-        ticket = user.ticket,
+        id = planet.id,
+        user_name = planet.user_name,
+        ticket = planet.like_count,
     )
 
     return response
