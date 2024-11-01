@@ -30,6 +30,7 @@ const Home: React.FC = () => {
       <div className={styles.logoContainer}>
         <img src={homeLogo} alt="Home Logo" />
       </div>
+
       <div className={styles.LoginContainer}>
       <Button onClick={openSignInModal} text="로그인" />
       <Button onClick={openSignUpModal} text="회원가입" />
