@@ -2,8 +2,6 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
-from .comments_schema import Comment
-
 
 class PlanetItem(BaseModel):
     id: int=Field(title="id")

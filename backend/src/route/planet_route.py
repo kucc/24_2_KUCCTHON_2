@@ -1,8 +1,8 @@
+from config import Settings
 from dependencies import get_current_user, get_db
 from domain.planet_service import service_abandon_item, service_apply_item, service_read_all_planet, service_read_planet
 from fastapi import APIRouter, Depends, status
 from schema.planet_schema import PlanetItem, ReqPutPlanetItem, ResGetAllPlanet, ResGetPlanet
-from config import Settings
 from sqlalchemy.orm import Session
 
 router = APIRouter(
@@ -38,7 +38,7 @@ async def get_planet(
     result = await service_read_planet(user_id, db)
 
     return result
-  
+
 @router.put(
     "/random_item",
     summary="아이템 적용",
