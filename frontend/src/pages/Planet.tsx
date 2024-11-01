@@ -118,7 +118,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
         <div className={styles.topBtn}>
           <Button text="방명록" onClick={handleVisitor} />
           <Button text="뽑기" onClick={handlePickup} />
-          <Button text={`바나나 창고 ${count}`} onClick={dkarjteh} />
+          <Button text={`바나나 창고 ${planets?.like_count}`} onClick={dkarjteh} />
         </div>
         <div className={styles.planetContainer}>
           <div className={styles.planetPlane} >
@@ -144,7 +144,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
         <div className={styles.topBtn}>
           <Button text="방명록" onClick={handleVisitor} />
           <Button text="바나나 주기" onClick={giveBanana} />
-          <Button text={`바나나 창고 ${count}`} onClick={dkarjteh} />
+          <Button text={`바나나 창고 ${planets?.like_count}`} onClick={dkarjteh} />
         </div>
         <div className={styles.planetContainer}>
           <div className={styles.planetPlane} >
