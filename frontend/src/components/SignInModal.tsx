@@ -21,7 +21,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
   };
 
   const handleLogin = () => {
-    fetch("http://your-api-url.com/auth/login", {
+    fetch("http://127.0.0.1:8000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log(loginData);
         close(); // 로그인 성공 후 모달 닫기
       })
       .catch((error) => {
@@ -42,9 +42,9 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
   if (!isOpen) return null;
 
   return (
-        <div className={styles["modal-overlay"]} onClick={close}>
-        <div className={styles["modal-content"]} onClick={(e) => e.stopPropagation()}>
-        <span className="close" onClick={close}>&times;</span>
+        <div className={styles.modal_overlay} onClick={close}>
+        <div className={styles.modal_content} onClick={(e) => e.stopPropagation()}>
+        <span className={styles.close} onClick={close}>&times;</span>
         <h2>로그인</h2>
         <input
           type="text"
@@ -52,7 +52,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
           placeholder="아이디"
           value={loginData.login_id}
           onChange={handleInputChange}
-          className="input-field"
+          className={styles.input_field}
         />
         <input
           type="password"
@@ -60,9 +60,9 @@ const SignInModal: React.FC<SignInModalProps> = ({ isOpen, close }) => {
           placeholder="비밀번호"
           value={loginData.password}
           onChange={handleInputChange}
-          className="input-field"
+          className={styles.input_field}
         />
-        <button onClick={handleLogin} className="login-button">로그인</button>
+        <button onClick={handleLogin} className={styles.login_button}>로그인</button>
       </div>
     </div>
   );
