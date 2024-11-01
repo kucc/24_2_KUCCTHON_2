@@ -4,7 +4,7 @@ import bananaButton from "../img/bananaButton.svg";
 import bananaButton_hover from "../img/bananaButton_hover.svg";
 interface ButtonProps {
   text: string; 
-  onClick: () => void; 
+  onClick?: () => void; 
   className?: string;
 }
 

@@ -1,5 +1,4 @@
-import React, {useState} from "react";
-import ReactDOM from "react-dom/client";
+import React, {useState, useEffect} from "react";
 import styles from "./Planet.module.css";
 import planet from '../img/Planet.svg'
 import VisitorBookModal from "../components/VisitorBookModal";
@@ -8,6 +7,16 @@ import PickupModal from "../components/PickupModal";
 import { useParams,useNavigate } from 'react-router-dom';
 import Blackhole from '../components/Blackhole';
 
+interface PlanetData {
+  planet_name: string;
+  user_id: number;
+  user_name: string;
+  head: number;
+  pet: number;
+  eye: number;
+  tool: number;
+  like_count: number;
+}
 
 interface PlanetProps {
   userId: number;
@@ -15,12 +24,41 @@ interface PlanetProps {
 }
 
 const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
-
-  const [isVisitor, setIsVisitor] = useState(false)
-  const [isPickUp, setIsPickup] = useState(false)
+  const [isVisitor, setIsVisitor] = useState(false);
+  const [isPickUp, setIsPickup] = useState(false);
+  const [planetData, setPlanetData] = useState<PlanetData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const { planetUserId } = useParams<{ planetUserId: string }>(); // URL에서 planetUserId 가져오기
+  const [likeResponse, setLikeResponse] = useState(null);
+ 
+  const fetchPlanetData = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/planet/${planetUserId}`, {
+        method: "GET",
+      });
 
-  const { planetUserId } = useParams(); // URL에서 planetUserId 가져오기
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+
+      const data: PlanetData = await response.json();
+      setPlanetData(data);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlanetData();
+  }, [planetUserId]);
 
   const handleVisitor = () => {
     setIsVisitor(!isVisitor)
@@ -30,23 +68,35 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
     setIsPickup(!isPickUp)
   }
 
-  const dkarjteh = () => {
-    console.log('바나나 거지 ㅋㅋ')
-  }
-
-  const count = 8
+  const count = planetData ? planetData.like_count : 0;
   const isMine = userId === Number(planetUserId);
-  console.log(isMine)
 
-  const giveBanana= () => {
-  }
 
-  // const inMine = () => {
-  //   if (userId === planetId) {
-  //     return true
-  //   }
-  // }
+  const handleGiveBanana = async () => {
+    if (!planetUserId) return;
 
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/like/${planetUserId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer your_token_here`, // 실제 토큰으로 대체
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+
+      const data = await response.json();
+      setLikeResponse(data); // 성공 응답을 상태에 저장
+      console.log("Like success:", data);
+    } catch (error) {
+      console.error("Error giving banana:", error);
+    }
+  };
+
+  
   const handleBlackholeClick = () => {
     navigate("/gateway"); // Blackhole 클릭 시 'gateway'로 이동
   };
@@ -57,7 +107,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
         <div className={styles.topBtn}>
           <Button text="방명록" onClick={handleVisitor} />
           <Button text="뽑기" onClick={handlePickup} />
-          <Button text={`바나나 창고 ${count}`} onClick={dkarjteh} />
+          <Button text={`바나나 창고 ${count}`} />
         </div>
         <div className={styles.planetContainer}>
           <div className={styles.planetPlane} >
@@ -72,8 +122,8 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       <div className={isMine? styles.hidden : styles.otherPlanetPageContainer}>
         <div className={styles.topBtn}>
           <Button text="방명록" onClick={handleVisitor} />
-          <Button text="바나나 주기" onClick={giveBanana} />
-          <Button text={`바나나 창고 ${count}`} onClick={dkarjteh} />
+          <Button text="바나나 주기" onClick={handleGiveBanana} />
+          <Button text={`바나나 창고 ${count}`}  />
         </div>
         <div className={styles.planetContainer}>
           <div className={styles.planetPlane} >
