@@ -1,0 +1,20 @@
+.background {
+  background-image: url("../img/homeBg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: flex; /* flexbox를 사용하여 내부 요소를 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  flex-direction: column;
+}
+
+.LoginContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 800px;
+  margin-top: 110px;
+}
