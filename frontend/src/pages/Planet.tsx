@@ -109,6 +109,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   //     return true
   //   }
   // }
+  
 
   const handleBlackholeClick = () => {
     navigate("/gateway"); // Blackhole 클릭 시 'gateway'로 이동
@@ -170,10 +171,11 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       </div>
       <div className={isVisitor? styles.visitorModal : styles.hidden}>
           <button onClick={handleVisitor} >X</button>
-          <VisitorBookModal/>
+          <VisitorBookModal userId={userId} setUserId={setUserId} otherId={Number(planetUserId)}/>
       </div>
       <div className={isPickUp? styles.pickupModal: styles.hidden}>
           <button onClick={handlePickup} >X</button>
+
           <PickupModal 
             userId={userId} 
             setUserId={setUserId} 
@@ -182,6 +184,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       </div>
       <div className={styles.BlackholeContainer} onClick={handleBlackholeClick}>
         <Blackhole/>
+
       </div>
     </div>
   );
