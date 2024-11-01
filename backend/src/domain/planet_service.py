@@ -1,7 +1,7 @@
 from datetime import datetime
+
 from fastapi import HTTPException, status
-from models import Item, Planet, User
-from models import Comments, Planet, User
+from models import Comments, Item, Planet, User
 from schema.comments_schema import Comment, ReqPostComments, ResGetComments, ResPostComments
 from schema.planet_schema import ResGetPlanet
 from sqlalchemy import select
