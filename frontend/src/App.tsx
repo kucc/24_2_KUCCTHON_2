@@ -21,7 +21,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path={"/"} element={<Planet />} />
+        <Route path={"/"} element={<Home />} />
       </Routes>
     </Router>
   );

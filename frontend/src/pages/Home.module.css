@@ -1,0 +1,8 @@
+.background {
+  background-image: url("../img/homeBg.svg");
+  background-size: cover; /* 이미지를 전체에 맞게 조절 */
+  background-position: center; /* 이미지 중앙 정렬 */
+  background-repeat: no-repeat; /* 이미지 반복 방지 */
+  height: 100vh; /* 화면 전체 높이 */
+  width: 100%; /* 화면 전체 너비 */
+}
