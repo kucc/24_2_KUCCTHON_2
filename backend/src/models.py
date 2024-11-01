@@ -12,9 +12,13 @@ class User(Base):
     password = Column(String(255), nullable=False)
     user_name = Column(String(20), nullable=False)
 
+    ticket = Column(Integer, nullable=False)
+    tmp_random_item_id = Column(Integer, nullable=True)
+
     planet = relationship("Planet", back_populates="user")
     comments = relationship("Comments", back_populates="user")
     likes = relationship("Likes", back_populates="user")
+
 
 class Planet(Base):
     __tablename__ = "planet"
@@ -31,6 +35,7 @@ class Planet(Base):
     user = relationship("User", back_populates="planet")
     comments = relationship("Comments", back_populates="planet")
     likes = relationship("Likes", back_populates="planet")
+
 
 class Comments(Base):
     __tablename__ = "comments"
