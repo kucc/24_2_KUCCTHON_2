@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -15,6 +15,7 @@ const fetchData = async () => {
 };
 
 const App: React.FC = () => {
+  const [userId, setUserId] = useState<number>(0);
   useEffect(() => {
     fetchData();
   }, []);
@@ -22,9 +23,9 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path={"/"} element={<Home />} />
-        <Route path={"/channel"} element={<Channel />} />
-        <Route path={"/planet"} element={<Planet />} />
+        <Route path={"/"} element={<Home userId={userId} setUserId={setUserId}/>} />
+        <Route path={"/channel"} element={<Channel userId={userId} setUserId={setUserId}/>} />
+        <Route path="/planet/:planetUserId" element={<Planet userId={userId} setUserId={setUserId}/>} />
       </Routes>
     </Router>
   );

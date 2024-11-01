@@ -4,7 +4,12 @@ import styles from "./Channel.module.css";
 import banana from '../img/banana.svg'
 import planetImg from '../img/Planet.svg';
 import { useNavigate } from 'react-router-dom';
+import Planet from './Planet';
 
+interface ChannelProps {
+  userId: number;
+  setUserId: (id: number) => void;
+}
 interface Planet {
   planet_name: string
   user_id: number
@@ -34,14 +39,16 @@ const fetchPlanet = async (): Promise<PlanetResponse> => {
   return data;
 }
 
-const Channel: React.FC = () => {
+const Channel: React.FC<ChannelProps> = ({userId, setUserId}) => {
   const [planets, setPlanets] = useState<Planet[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handlePlanetClick = (userId: number) => {
-    navigate(`/planet`);
+  const handlePlanetClick = (planetUserId: number) => {
+    console.log(planetUserId);
+    <Planet userId={userId} setUserId={setUserId}/>
+    navigate(`/planet/${planetUserId}`); // planetUserId를 URL 경로에 추가
   };
   
   useEffect(() => {
