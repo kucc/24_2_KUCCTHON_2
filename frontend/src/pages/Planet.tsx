@@ -58,6 +58,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isVisitor, setIsVisitor] = useState(false)
   const [isPickUp, setIsPickup] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const { planetUserId } = useParams(); // URL에서 planetUserId 가져오기
@@ -69,6 +70,7 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   const handlePickup = () => {
     setIsPickup(!isPickUp)
   }
+  
 
   const dkarjteh = () => {
     console.log('바나나 거지 ㅋㅋ')
@@ -172,7 +174,11 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
       </div>
       <div className={isPickUp? styles.pickupModal: styles.hidden}>
           <button onClick={handlePickup} >X</button>
-          <PickupModal userId={userId} setUserId={setUserId}/>
+          <PickupModal 
+            userId={userId} 
+            setUserId={setUserId} 
+            closeModal={() => setIsPickup(false)} // 모달 닫기 함수 전달
+          />
       </div>
       <div className={styles.BlackholeContainer} onClick={handleBlackholeClick}>
         <Blackhole/>

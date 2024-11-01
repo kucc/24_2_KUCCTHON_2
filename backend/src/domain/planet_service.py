@@ -244,7 +244,7 @@ async def service_read_comments(user_id: int, db: Session):
   return response
 
 def service_increase_like(planet_id: int, count: int, db: Session) -> None:
-    stmt = select(Planet).where(Planet.id == planet_id)
+    stmt = select(Planet).where(Planet.user_id == planet_id)
     try:
         planet = db.execute(stmt).scalar_one_or_none()
         if not planet:

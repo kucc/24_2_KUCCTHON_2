@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 
 def service_create_like(user_id, planet_id, db: Session):
-    planet_stmt = select(Planet).where(Planet.id == planet_id)
+    planet_stmt = select(Planet).where(Planet.user_id == planet_id)
     # Likes에 좋아요 정보를 저장.
     # 1분이 지났는지 아닌지 파악.
     # 좋아요를 누르면 User의 ticket, Planet의 like_count가 1씩 증가하게. 이거 따로 빼기
