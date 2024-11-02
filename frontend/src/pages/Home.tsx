@@ -3,30 +3,48 @@ import ReactDOM from "react-dom/client";
 import styles from "./Home.module.css";
 import Button from "../components/Button";
 import SignInModal from "../components/SignInModal";
+import SignUpModal from '../components/SignUpModal'; 
 import homeLogo from "../img/homeLogo.svg";
-import { Sign } from "crypto";
 
-const Home: React.FC = () => {
+interface HomeProps {
+  userId: number;
+  setUserId: (id: number) => void;
+}
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Home: React.FC<HomeProps> = ({userId, setUserId}) => {
+  const [currentModal, setCurrentModal] = useState<'signIn' | 'signUp' | null>(null);
 
-  const openModal = () => {
-    console.log('openModal');
-    setIsModalOpen(true);}
-  const closeModal = () => {setIsModalOpen(false);
-    console.log('closeModal')
-  }
+  const openSignInModal = () => {
+    console.log('Open Sign-In Modal');
+    setCurrentModal('signIn');
+  };
+
+  const openSignUpModal = () => {
+    console.log('Open Sign-Up Modal');
+    setCurrentModal('signUp');
+  };
+
+  const closeModal = () => {
+    setCurrentModal(null);
+    console.log('Close Modal');
+  };
+
 
   return (
     <div className={styles.background}>
       <div className={styles.logoContainer}>
-        <img src={homeLogo}></img>
+        <img src={homeLogo} alt="Home Logo" />
       </div>
+
       <div className={styles.LoginContainer}>
-        <Button  onClick={openModal} text="로그인" />
-        <SignInModal isOpen={isModalOpen} close={closeModal} />
-        {/* <Button text="회원가입" /> */}
+      <Button onClick={openSignInModal} text="로그인" />
+      <Button onClick={openSignUpModal} text="회원가입" />
       </div>
+         {/* 로그인 모달 */}
+         {currentModal === 'signIn' && <SignInModal isOpen={currentModal === 'signIn'} close={closeModal} userId={userId} setUserId={setUserId}/>}
+
+         {/* 회원가입 모달 */}
+         {currentModal === 'signUp' && <SignUpModal isOpen={currentModal === 'signUp'} close={closeModal} />}
     </div>
   );
 };

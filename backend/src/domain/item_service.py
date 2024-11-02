@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 
 def service_draw_random_item(db: Session):
-    random_id = random.randint(1, 20) # 현재 20번까지 Item이 존재.
+    random_id = random.randint(1, 6) # 현재 20번까지 Item이 존재.
 
     stmt1 = select(Item).where(Item.id == random_id)
 

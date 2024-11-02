@@ -8,7 +8,9 @@ interface ButtonProps {
   className?: string;
 }
 
+
 const Button: React.FC<ButtonProps> = ({ text, onClick, className }) => {
+
   return (
     <div className={styles["button-container"]} >
       <img src={bananaButton} alt="banana" className={styles["button-image"]} />
