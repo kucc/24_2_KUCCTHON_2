@@ -31,6 +31,29 @@ interface PlanetInfo {
   like_count: number
 }
 
+const updateLike = async (userId: number, planetId: number) => {
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/like/${planetId}?user_id=${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Error liking planet: ${response.status} - ${errorData.detail || 'No additional message'}`);
+    }
+
+    const data = await response.json();
+    console.log("Like updated data:", data); // 업데이트된 데이터 확인
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error; // 에러를 다시 던져서 호출자에서 처리할 수 있도록 함
+  }
+};
+
 const fetchPlanet = async (user_id: number): Promise<PlanetInfo> => {
   try {
     const response = await fetch(`http://127.0.0.1:8000/planet/${user_id}`, {
@@ -80,7 +103,19 @@ const Planet: React.FC<PlanetProps> = ({userId, setUserId}) => {
   const isMine = userId === Number(planetUserId);
   console.log(isMine)
 
-  const giveBanana= () => {
+  const giveBanana= async () => {
+    if (!planets) return; // items가 null인 경우 처리
+
+    try {
+      await updateLike(userId, planets.user_id); // userId와 items.id를 사용하여 좋아요 요청
+      // 필요시 추가적인 상태 업데이트나 로직 실행
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message); // 오류 메시지 설정
+      } else {
+        setError("An unknown error occurred");
+      }
+    }
   }
   
   useEffect(() => {
