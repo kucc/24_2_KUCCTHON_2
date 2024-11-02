@@ -131,7 +131,7 @@ const PickupModal: React.FC<PickupProps> = ({ userId, setUserId, closeModal }) =
         </div>
       </div>
       <div className={styles.Btn}>
-        <Button text="바나나 사용하기" onClick={handleUpdateRandomItem} /> {/* 버튼 클릭 시 랜덤 아이템 가져오기 */}
+        <Button text="아이템 사용하기" onClick={handleUpdateRandomItem} /> {/* 버튼 클릭 시 랜덤 아이템 가져오기 */}
       </div>
     </div>
   );
